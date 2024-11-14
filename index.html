@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fashionable Game Photo Album</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .intro {
+            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            color: #666;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            overflow: hidden;
+            width: 100%;
+            height: 0;
+            transition: .5s ease;
+        }
+        .gallery-item:hover .overlay {
+            height: 100%;
+        }
+        .overlay-content {
+            color: white;
+            font-size: 20px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 100%;
+        }
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.8);
+        }
+        #lightbox img {
+            max-width: 90%;
+            max-height: 80%;
+            margin-top: 2%;
+        }
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Floral Shadows and Moonlight</h1>
+        <!-- This div contains the centered text below the title -->
+        <div class="intro">
+            <span>米号：189695166</span>
+            <span style="margin: 0 8px; display: inline-block;">|</span>
+            <a href="https://tieba.baidu.com/p/6851026911" style="color: #0073e6; text-decoration: none;" class="hover:underline transition-colors duration-300" target="_blank">贴吧存档</a>
+            <span style="margin: 0 8px; display: inline-block;">|</span>
+            <span>"仅是某个小女孩的赛博纪念馆。"</span>
+        </div>
+        <div class="gallery" id="gallery"></div>
+    </div>
+
+    <div id="lightbox" onclick="this.style.display='none'">
+        <span class="close">&times;</span>
+        <img id="lightbox-img" src="" alt="Lightbox Image">
+    </div>
+
+    <script>
+        // Replace 'path/to/your/images/' with the actual path to your game pictures folder
+        const imagePath = './';
+        
+        // Add your image filenames here
+        const images = [
+            '2021-06-13_203921.png',
+			'2023-09-13_205448.png',
+			'2023-08-28_170001.png',
+			'2024-04-20_191910.png',
+			'2024-04-28_075134.png',
+			'微信截图_20220422175325.png',
+			'微信截图_20220708144710.png',
+			'微信截图_20220719215339.png',
+			'微信截图_20220422175925.png',
+			'微信截图_20220401170221.png',
+			'2022-02-25_111642.png',
+			'2022-01-09_172400.png',
+			'2022-02-12_170158.png',
+			'2022-02-27_154542.png',
+			'2021-10-23_135403.png',
+			'2023-03-09_130201.png',
+			'2021-12-28_222035.png',
+			'i51010036H100010.png',
+			'2021-06-03_215610.png',
+			'微信截图_20220702191902.png',
+            // Add more image filenames as needed
+        ];
+
+        const gallery = document.getElementById('gallery');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        images.forEach((image, index) => {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+            item.innerHTML = `
+                <img src="${imagePath}${image}" alt="Game Screenshot ${index + 1}">
+                <div class="overlay">
+                    <div class="overlay-content">View</div>
+                </div>
+            `;
+            item.addEventListener('click', () => {
+                lightboxImg.src = `${imagePath}${image}`;
+                lightbox.style.display = 'block';
+            });
+            gallery.appendChild(item);
+        });
+    </script>
+</body>
+</html>
